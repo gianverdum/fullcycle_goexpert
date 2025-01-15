@@ -39,6 +39,7 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	Category() CategoryResolver
 	Mutation() MutationResolver
 	Query() QueryResolver
 }
@@ -72,6 +73,9 @@ type ComplexityRoot struct {
 	}
 }
 
+type CategoryResolver interface {
+	Courses(ctx context.Context, obj *model.Category) ([]*model.Course, error)
+}
 type MutationResolver interface {
 	CreateCategory(ctx context.Context, input model.NewCategory) (*model.Category, error)
 	CreateCourse(ctx context.Context, input model.NewCourse) (*model.Course, error)
@@ -336,7 +340,7 @@ func (ec *executionContext) field_Mutation_createCategory_argsInput(
 ) (model.NewCategory, error) {
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalNNewCategory2githubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCategory(ctx, tmp)
+		return ec.unmarshalNNewCategory2githubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCategory(ctx, tmp)
 	}
 
 	var zeroVal model.NewCategory
@@ -359,7 +363,7 @@ func (ec *executionContext) field_Mutation_createCourse_argsInput(
 ) (model.NewCourse, error) {
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalNNewCourse2githubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCourse(ctx, tmp)
+		return ec.unmarshalNNewCourse2githubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCourse(ctx, tmp)
 	}
 
 	var zeroVal model.NewCourse
@@ -586,7 +590,7 @@ func (ec *executionContext) _Category_courses(ctx context.Context, field graphql
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Courses, nil
+		return ec.resolvers.Category().Courses(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -600,15 +604,15 @@ func (ec *executionContext) _Category_courses(ctx context.Context, field graphql
 	}
 	res := resTmp.([]*model.Course)
 	fc.Result = res
-	return ec.marshalNCourse2ᚕᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourseᚄ(ctx, field.Selections, res)
+	return ec.marshalNCourse2ᚕᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourseᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Category_courses(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Category",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -783,7 +787,7 @@ func (ec *executionContext) _Course_category(ctx context.Context, field graphql.
 	}
 	res := resTmp.(*model.Category)
 	fc.Result = res
-	return ec.marshalNCategory2ᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Course_category(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -837,7 +841,7 @@ func (ec *executionContext) _Mutation_createCategory(ctx context.Context, field 
 	}
 	res := resTmp.(*model.Category)
 	fc.Result = res
-	return ec.marshalNCategory2ᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -902,7 +906,7 @@ func (ec *executionContext) _Mutation_createCourse(ctx context.Context, field gr
 	}
 	res := resTmp.(*model.Course)
 	fc.Result = res
-	return ec.marshalNCourse2ᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourse(ctx, field.Selections, res)
+	return ec.marshalNCourse2ᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourse(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createCourse(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -967,7 +971,7 @@ func (ec *executionContext) _Query_categories(ctx context.Context, field graphql
 	}
 	res := resTmp.([]*model.Category)
 	fc.Result = res
-	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategoryᚄ(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategoryᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_categories(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1021,7 +1025,7 @@ func (ec *executionContext) _Query_courses(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.([]*model.Course)
 	fc.Result = res
-	return ec.marshalNCourse2ᚕᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourseᚄ(ctx, field.Selections, res)
+	return ec.marshalNCourse2ᚕᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourseᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_courses(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3046,20 +3050,51 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 		case "id":
 			out.Values[i] = ec._Category_id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "name":
 			out.Values[i] = ec._Category_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "description":
 			out.Values[i] = ec._Category_description(ctx, field, obj)
 		case "courses":
-			out.Values[i] = ec._Category_courses(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Category_courses(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -3625,11 +3660,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNCategory2githubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2githubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v model.Category) graphql.Marshaler {
 	return ec._Category(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategoryᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategoryᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Category) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -3653,7 +3688,7 @@ func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋgverdumᚋfull
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCategory2ᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx, sel, v[i])
+			ret[i] = ec.marshalNCategory2ᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3673,7 +3708,7 @@ func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋgverdumᚋfull
 	return ret
 }
 
-func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -3683,11 +3718,11 @@ func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋgverdumᚋfullcyc
 	return ec._Category(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNCourse2githubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourse(ctx context.Context, sel ast.SelectionSet, v model.Course) graphql.Marshaler {
+func (ec *executionContext) marshalNCourse2githubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourse(ctx context.Context, sel ast.SelectionSet, v model.Course) graphql.Marshaler {
 	return ec._Course(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCourse2ᚕᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourseᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Course) graphql.Marshaler {
+func (ec *executionContext) marshalNCourse2ᚕᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourseᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Course) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -3711,7 +3746,7 @@ func (ec *executionContext) marshalNCourse2ᚕᚖgithubᚗcomᚋgverdumᚋfullcy
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCourse2ᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourse(ctx, sel, v[i])
+			ret[i] = ec.marshalNCourse2ᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourse(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3731,7 +3766,7 @@ func (ec *executionContext) marshalNCourse2ᚕᚖgithubᚗcomᚋgverdumᚋfullcy
 	return ret
 }
 
-func (ec *executionContext) marshalNCourse2ᚖgithubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourse(ctx context.Context, sel ast.SelectionSet, v *model.Course) graphql.Marshaler {
+func (ec *executionContext) marshalNCourse2ᚖgithubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐCourse(ctx context.Context, sel ast.SelectionSet, v *model.Course) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -3756,12 +3791,12 @@ func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.Selec
 	return res
 }
 
-func (ec *executionContext) unmarshalNNewCategory2githubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCategory(ctx context.Context, v any) (model.NewCategory, error) {
+func (ec *executionContext) unmarshalNNewCategory2githubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCategory(ctx context.Context, v any) (model.NewCategory, error) {
 	res, err := ec.unmarshalInputNewCategory(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNNewCourse2githubᚗcomᚋgverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCourse(ctx context.Context, v any) (model.NewCourse, error) {
+func (ec *executionContext) unmarshalNNewCourse2githubᚗcomᚋgianverdumᚋfullcycle_goexpertᚋ13ᚑGraphQLᚋgraphᚋmodelᚐNewCourse(ctx context.Context, v any) (model.NewCourse, error) {
 	res, err := ec.unmarshalInputNewCourse(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
