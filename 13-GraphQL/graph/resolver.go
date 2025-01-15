@@ -8,4 +8,5 @@ import "github.com/gianverdum/fullcycle_goexpert/13-GraphQL/internal/database"
 
 type Resolver struct{
 	CategoryDB *database.Category
+	CourseDB *database.Course
 }
